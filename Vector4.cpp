@@ -42,6 +42,7 @@ float32& CVector4::operator[](int32 index)
 		case 3: return m_W;
 		default:
 			Assert(false);
+
 			return m_X;
 	}
 }
@@ -56,6 +57,7 @@ const float32& CVector4::operator[](int32 index) const
 		case 3: return m_W;
 		default:
 			Assert(false);
+
 			return m_X;
 	}
 }
@@ -153,8 +155,7 @@ CVector4 CVector4::operator+(const CVector4& other) const
 		other.m_W,
 		other.m_Z,
 		other.m_Y,
-		other.m_X
-	);
+		other.m_X);
 	
 	simde__m128 result = simde_mm_add_ps(v1, v2);
 	float32 temp[4];
@@ -167,8 +168,7 @@ CVector4 CVector4::operator+(const CVector4& other) const
 		m_X + other.m_X,
 		m_Y + other.m_Y,
 		m_Z + other.m_Z,
-		m_W + other.m_W
-	);
+		m_W + other.m_W);
 #endif
 }
 
@@ -194,8 +194,7 @@ CVector4 CVector4::operator-(const CVector4& other) const
 		other.m_W,
 		other.m_Z,
 		other.m_Y,
-		other.m_X
-	);
+		other.m_X);
 	
 	simde__m128 result = simde_mm_sub_ps(v1, v2);
 	float32 temp[4];
@@ -208,8 +207,7 @@ CVector4 CVector4::operator-(const CVector4& other) const
 		m_X - other.m_X,
 		m_Y - other.m_Y,
 		m_Z - other.m_Z,
-		m_W - other.m_W
-	);
+		m_W - other.m_W);
 #endif
 }
 
@@ -236,8 +234,7 @@ CVector4 CVector4::operator*(const CVector4& other) const
 		other.m_W,
 		other.m_Z,
 		other.m_Y,
-		other.m_X
-	);
+		other.m_X);
 	
 	simde__m128 result = simde_mm_mul_ps(v1, v2);
 	float32 temp[4];
@@ -250,8 +247,7 @@ CVector4 CVector4::operator*(const CVector4& other) const
 		m_X * other.m_X,
 		m_Y * other.m_Y,
 		m_Z * other.m_Z,
-		m_W * other.m_W
-	);
+		m_W * other.m_W);
 #endif
 }
 
@@ -311,8 +307,7 @@ CVector4 CVector4::operator/(const CVector4& other) const
 		other.m_W,
 		other.m_Z,
 		other.m_Y,
-		other.m_X
-	);
+		other.m_X);
 	
 	simde__m128 result = simde_mm_div_ps(v1, v2);
 	float32 temp[4];
@@ -325,8 +320,7 @@ CVector4 CVector4::operator/(const CVector4& other) const
 		m_X / other.m_X,
 		m_Y / other.m_Y,
 		m_Z / other.m_Z,
-		m_W / other.m_W
-	);
+		m_W / other.m_W);
 #endif
 }
 
@@ -366,8 +360,7 @@ CVector4 CVector4::operator/(float32 scalar) const
 		m_X * invScalar,
 		m_Y * invScalar,
 		m_Z * invScalar,
-		m_W * invScalar
-	);
+		m_W * invScalar);
 #endif
 }
 
@@ -397,6 +390,7 @@ float32 CVector4::Length() const
 	result.v = vec_madd(v, v, zero);
 
 	float32 sum = result.f[0] + result.f[1] + result.f[2] + result.f[3];
+
 	return CMaths::Sqrt(sum);
 #else
 	simde__m128 v = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);

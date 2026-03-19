@@ -26,6 +26,7 @@ float32& CVector2::operator[](int32 index)
 		case 1: return m_Y;
 		default:
 			Assert(false);
+
 			return m_X;
 	}
 }
@@ -38,6 +39,7 @@ const float32& CVector2::operator[](int32 index) const
 		case 1: return m_Y;
 		default:
 			Assert(false);
+
 			return m_X;
 	}
 }

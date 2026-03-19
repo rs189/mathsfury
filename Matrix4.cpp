@@ -141,6 +141,7 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 CMatrix4& CMatrix4::operator*=(const CMatrix4& other)
 {
 	*this = (*this) * other;
+
 	return *this;
 }
 
@@ -239,12 +240,14 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 CMatrix4& CMatrix4::operator+=(const CMatrix4& other)
 {
 	*this = *this + other;
+
 	return *this;
 }
 
 CMatrix4& CMatrix4::operator-=(const CMatrix4& other)
 {
 	*this = *this - other;
+
 	return *this;
 }
 
@@ -317,8 +320,7 @@ CVector4 CMatrix4::operator*(const CVector4& v) const
 	
 	simde__m128 result = simde_mm_add_ps(
 		simde_mm_add_ps(simde_mm_mul_ps(vx, col0), simde_mm_mul_ps(vy, col1)),
-		simde_mm_add_ps(simde_mm_mul_ps(vz, col2), simde_mm_mul_ps(vw, col3))
-	);
+		simde_mm_add_ps(simde_mm_mul_ps(vz, col2), simde_mm_mul_ps(vw, col3)));
 	float32 temp[4];
 	simde_mm_storeu_ps(temp, result);
 
@@ -329,8 +331,7 @@ CVector4 CMatrix4::operator*(const CVector4& v) const
 		m_Data[0] * v.m_X + m_Data[4] * v.m_Y + m_Data[8] * v.m_Z + m_Data[12] * v.m_W,
 		m_Data[1] * v.m_X + m_Data[5] * v.m_Y + m_Data[9] * v.m_Z + m_Data[13] * v.m_W,
 		m_Data[2] * v.m_X + m_Data[6] * v.m_Y + m_Data[10] * v.m_Z + m_Data[14] * v.m_W,
-		m_Data[3] * v.m_X + m_Data[7] * v.m_Y + m_Data[11] * v.m_Z + m_Data[15] * v.m_W
-	);
+		m_Data[3] * v.m_X + m_Data[7] * v.m_Y + m_Data[11] * v.m_Z + m_Data[15] * v.m_W);
 #endif
 }
 

@@ -36,6 +36,7 @@ float32& CVector3::operator[](int32 index)
 		case 2: return m_Z;
 		default:
 			Assert(false);
+
 			return m_X;
 	}
 }
@@ -49,6 +50,7 @@ const float32& CVector3::operator[](int32 index) const
 		case 2: return m_Z;
 		default:
 			Assert(false);
+
 			return m_X;
 	}
 }
@@ -342,6 +344,7 @@ float32 CVector3::Length() const
 	result;
 	result.v = vec_madd(v, v, zero);
 	float32 sum = result.f[0] + result.f[1] + result.f[2];
+
 	return CMaths::Sqrt(sum);
 #else
 	simde__m128 v = simde_mm_set_ps(0.0f, m_Z, m_Y, m_X);

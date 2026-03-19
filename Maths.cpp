@@ -81,6 +81,7 @@ CVector3 CMaths::Normalise(const CVector3& v)
 	if (lenSq > 1e-8f)
 	{
 		float32 invLen = 1.0f / Sqrt(lenSq);
+
 		return CVector3(v.m_X * invLen, v.m_Y * invLen, v.m_Z * invLen);
 	}
 
@@ -128,8 +129,7 @@ CVector3 CMaths::Cross(const CVector3& a, const CVector3& b)
 	
 	simde__m128 result = simde_mm_sub_ps(
 		simde_mm_mul_ps(ayzx, bzxy),
-		simde_mm_mul_ps(azxy, byzx)
-	);
+		simde_mm_mul_ps(azxy, byzx));
 	float32 temp[4];
 	simde_mm_storeu_ps(temp, result);
 
@@ -139,8 +139,7 @@ CVector3 CMaths::Cross(const CVector3& a, const CVector3& b)
 	return CVector3(
 		a.m_Y * b.m_Z - a.m_Z * b.m_Y,
 		a.m_Z * b.m_X - a.m_X * b.m_Z,
-		a.m_X * b.m_Y - a.m_Y * b.m_X
-	);
+		a.m_X * b.m_Y - a.m_Y * b.m_X);
 #endif
 }
 

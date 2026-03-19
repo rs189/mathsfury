@@ -125,27 +125,23 @@ public:
 		float32 fovyDeg,
 		float32 aspect,
 		float32 nearClip,
-		float32 farClip
-	);
+		float32 farClip);
 	static CMatrix4 Orthographic(
 		float32 left,
 		float32 right,
 		float32 bottom,
 		float32 top,
 		float32 nearClip,
-		float32 farClip
-	);
+		float32 farClip);
 	static CMatrix4 LookAt(
 		const CVector3& eye,
 		const CVector3& target,
-		const CVector3& up
-	);
+		const CVector3& up);
 	static CMatrix4 Translate(const CMatrix4& m, const CVector3& v);
 	static CMatrix4 Rotate(
 		const CMatrix4& m,
 		float32 angleDeg,
-		const CVector3& axis
-	);
+		const CVector3& axis);
 	static CMatrix4 Scale(const CMatrix4& m, const CVector3& v);
 
 	static EquirectUV_t DirectionToEquirect(const CVector3& dir);
