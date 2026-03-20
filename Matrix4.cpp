@@ -71,7 +71,7 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 		res = vec_madd(col1, vec_splats(other.m_Data[c * 4 + 1]), res);
 		res = vec_madd(col2, vec_splats(other.m_Data[c * 4 + 2]), res);
 		res = vec_madd(col3, vec_splats(other.m_Data[c * 4 + 3]), res);
-		// store
+		// Store
 		uRes.v = res;
 		result.m_Data[c * 4 + 0] = uRes.f[0];
 		result.m_Data[c * 4 + 1] = uRes.f[1];
@@ -80,8 +80,8 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 	}
 
 	return result;
-#else
-	// load
+#else // PLATFORM_PS3
+	// Load
 	simde__m128 col0 = simde_mm_loadu_ps(&m_Data[0]);
 	simde__m128 col1 = simde_mm_loadu_ps(&m_Data[4]);
 	simde__m128 col2 = simde_mm_loadu_ps(&m_Data[8]);
@@ -110,7 +110,7 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 				col3,
 				simde_mm_set1_ps(other.m_Data[c * 4 + 3])));
 		
-		// store
+		// Store
 		simde_mm_storeu_ps(temp, res);
 		result.m_Data[c * 4 + 0] = temp[0];
 		result.m_Data[c * 4 + 1] = temp[1];
@@ -119,7 +119,7 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 	}
 
 	return result;
-#endif
+#endif // !PLATFORM_PS3
 #else
 	CMatrix4 result;
 	for (int32 i = 0; i < 4; i++)
@@ -169,17 +169,18 @@ CMatrix4 CMatrix4::operator+(const CMatrix4& other) const
 	}
 
 	return result;
-#else
+#else // PLATFORM_PS3
 	CMatrix4 result;
 	for (int32 i = 0; i < 4; i++)
 	{
+		// Load
 		simde__m128 v1 = simde_mm_loadu_ps(&m_Data[i * 4]);
 		simde__m128 v2 = simde_mm_loadu_ps(&other.m_Data[i * 4]);
 		simde_mm_storeu_ps(&result.m_Data[i * 4], simde_mm_add_ps(v1, v2));
 	}
 
 	return result;
-#endif
+#endif // !PLATFORM_PS3
 #else
 	CMatrix4 result;
 	for (int32 i = 0; i < 16; i++)
@@ -215,17 +216,18 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 	}
 
 	return result;
-#else
+#else // PLATFORM_PS3
 	CMatrix4 result;
 	for (int32 i = 0; i < 4; i++)
 	{
+		// Load
 		simde__m128 v1 = simde_mm_loadu_ps(&m_Data[i * 4]);
 		simde__m128 v2 = simde_mm_loadu_ps(&other.m_Data[i * 4]);
 		simde_mm_storeu_ps(&result.m_Data[i * 4], simde_mm_sub_ps(v1, v2));
 	}
 	
 	return result;
-#endif
+#endif // !PLATFORM_PS3
 #else
 	CMatrix4 result;
 	for (int32 i = 0; i < 16; i++)
@@ -306,8 +308,8 @@ CVector4 CMatrix4::operator*(const CVector4& v) const
 	uRes.v = result;
 
 	return CVector4(uRes.f[0], uRes.f[1], uRes.f[2], uRes.f[3]);
-#else
-	// load
+#else // PLATFORM_PS3
+	// Load
 	simde__m128 col0 = simde_mm_loadu_ps(&m_Data[0]);
 	simde__m128 col1 = simde_mm_loadu_ps(&m_Data[4]);
 	simde__m128 col2 = simde_mm_loadu_ps(&m_Data[8]);
@@ -325,7 +327,7 @@ CVector4 CMatrix4::operator*(const CVector4& v) const
 	simde_mm_storeu_ps(temp, result);
 
 	return CVector4(temp[0], temp[1], temp[2], temp[3]);
-#endif
+#endif // !PLATFORM_PS3
 #else
 	return CVector4(
 		m_Data[0] * v.m_X + m_Data[4] * v.m_Y + m_Data[8] * v.m_Z + m_Data[12] * v.m_W,

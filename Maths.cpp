@@ -56,7 +56,7 @@ CVector3 CMaths::Normalise(const CVector3& v)
 	}
 
 	return CVector3(0.0f, 0.0f, 0.0f);
-#else
+#else // PLATFORM_PS3
 	simde__m128 vec = simde_mm_set_ps(0.0f, v.m_Z, v.m_Y, v.m_X);
 	simde__m128 squared = simde_mm_mul_ps(vec, vec);
 	float32 temp[4];
@@ -75,7 +75,7 @@ CVector3 CMaths::Normalise(const CVector3& v)
 	}
 
 	return CVector3(0.0f, 0.0f, 0.0f);
-#endif
+#endif // !PLATFORM_PS3
 #else
 	float32 lenSq = v.m_X * v.m_X + v.m_Y * v.m_Y + v.m_Z * v.m_Z;
 	if (lenSq > 1e-8f)
@@ -118,7 +118,7 @@ CVector3 CMaths::Cross(const CVector3& a, const CVector3& b)
 	result.v = vec_sub(prod1, prod2);
 	
 	return CVector3(result.f[0], result.f[1], result.f[2]);
-#else
+#else // PLATFORM_PS3
 	simde__m128 va = simde_mm_set_ps(0.0f, a.m_Z, a.m_Y, a.m_X);
 	simde__m128 vb = simde_mm_set_ps(0.0f, b.m_Z, b.m_Y, b.m_X);
 
@@ -134,7 +134,7 @@ CVector3 CMaths::Cross(const CVector3& a, const CVector3& b)
 	simde_mm_storeu_ps(temp, result);
 
 	return CVector3(temp[0], temp[1], temp[2]);
-#endif
+#endif // !PLATFORM_PS3
 #else
 	return CVector3(
 		a.m_Y * b.m_Z - a.m_Z * b.m_Y,
@@ -160,7 +160,7 @@ float32 CMaths::Dot(const CVector3& a, const CVector3& b)
 	product.v = vec_madd(va, vb, zero);
 	
 	return product.f[0] + product.f[1] + product.f[2];
-#else
+#else // PLATFORM_PS3
 	simde__m128 va = simde_mm_set_ps(0.0f, a.m_Z, a.m_Y, a.m_X);
 	simde__m128 vb = simde_mm_set_ps(0.0f, b.m_Z, b.m_Y, b.m_X);
 	simde__m128 product = simde_mm_mul_ps(va, vb);
@@ -169,7 +169,7 @@ float32 CMaths::Dot(const CVector3& a, const CVector3& b)
 	simde_mm_storeu_ps(temp, product);
 
 	return temp[0] + temp[1] + temp[2];
-#endif
+#endif // !PLATFORM_PS3
 #else
 	return a.m_X * b.m_X + a.m_Y * b.m_Y + a.m_Z * b.m_Z;
 #endif

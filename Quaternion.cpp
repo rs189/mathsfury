@@ -63,7 +63,7 @@ CMatrix4 CQuaternion::ToMatrix() const
 	xx = qSq.f[0];
 	yy = qSq.f[1];
 	zz = qSq.f[2];
-#else
+#else // PLATFORM_PS3
 	simde__m128 q = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
 	simde__m128 qSqVec = simde_mm_mul_ps(q, q);
 
@@ -73,7 +73,7 @@ CMatrix4 CQuaternion::ToMatrix() const
 	xx = temp[0];
 	yy = temp[1];
 	zz = temp[2];
-#endif
+#endif // !PLATFORM_PS3
 
 	float32 xy = m_X * m_Y;
 	float32 xz = m_X * m_Z;
@@ -214,7 +214,7 @@ CQuaternion& CQuaternion::Normalise()
 	}
 
 	return *this;
-#else
+#else // PLATFORM_PS3
 	simde__m128 q = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
 	simde__m128 qSqVec = simde_mm_mul_ps(q, q);
 	
@@ -236,7 +236,7 @@ CQuaternion& CQuaternion::Normalise()
 	}
 
 	return *this;
-#endif
+#endif // !PLATFORM_PS3
 #else
 	float32 len = Length();
 	if (len > 1e-8f)

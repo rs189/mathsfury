@@ -149,7 +149,7 @@ CVector4 CVector4::operator+(const CVector4& other) const
 	result.v = vec_add(v1, v2);
 
 	return CVector4(result.f[0], result.f[1], result.f[2], result.f[3]);
-#else
+#else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
 	simde__m128 v2 = simde_mm_set_ps(
 		other.m_W,
@@ -162,7 +162,7 @@ CVector4 CVector4::operator+(const CVector4& other) const
 	simde_mm_storeu_ps(temp, result);
 
 	return CVector4(temp[0], temp[1], temp[2], temp[3]);
-#endif
+#endif // !PLATFORM_PS3
 #else
 	return CVector4(
 		m_X + other.m_X,
@@ -188,7 +188,7 @@ CVector4 CVector4::operator-(const CVector4& other) const
 	result.v = vec_sub(v1, v2);
 
 	return CVector4(result.f[0], result.f[1], result.f[2], result.f[3]);
-#else
+#else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
 	simde__m128 v2 = simde_mm_set_ps(
 		other.m_W,
@@ -201,7 +201,7 @@ CVector4 CVector4::operator-(const CVector4& other) const
 	simde_mm_storeu_ps(temp, result);
 
 	return CVector4(temp[0], temp[1], temp[2], temp[3]);
-#endif
+#endif // !PLATFORM_PS3
 #else
 	return CVector4(
 		m_X - other.m_X,
@@ -228,7 +228,7 @@ CVector4 CVector4::operator*(const CVector4& other) const
 	result.v = vec_madd(v1, v2, zero);
 
 	return CVector4(result.f[0], result.f[1], result.f[2], result.f[3]);
-#else
+#else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
 	simde__m128 v2 = simde_mm_set_ps(
 		other.m_W,
@@ -241,7 +241,7 @@ CVector4 CVector4::operator*(const CVector4& other) const
 	simde_mm_storeu_ps(temp, result);
 
 	return CVector4(temp[0], temp[1], temp[2], temp[3]);
-#endif
+#endif // !PLATFORM_PS3
 #else
 	return CVector4(
 		m_X * other.m_X,
@@ -268,7 +268,7 @@ CVector4 CVector4::operator*(float32 scalar) const
 	result.v = vec_madd(v1, vs, zero);
 
 	return CVector4(result.f[0], result.f[1], result.f[2], result.f[3]);
-#else
+#else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
 	simde__m128 vs = simde_mm_set1_ps(scalar);
 
@@ -277,7 +277,7 @@ CVector4 CVector4::operator*(float32 scalar) const
 	simde_mm_storeu_ps(temp, result);
 
 	return CVector4(temp[0], temp[1], temp[2], temp[3]);
-#endif
+#endif // !PLATFORM_PS3
 #else
 	return CVector4(m_X * scalar, m_Y * scalar, m_Z * scalar, m_W * scalar);
 #endif
@@ -301,7 +301,7 @@ CVector4 CVector4::operator/(const CVector4& other) const
 	result.v = vec_madd(v1, reciprocal, zero);
 
 	return CVector4(result.f[0], result.f[1], result.f[2], result.f[3]);
-#else
+#else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
 	simde__m128 v2 = simde_mm_set_ps(
 		other.m_W,
@@ -314,7 +314,7 @@ CVector4 CVector4::operator/(const CVector4& other) const
 	simde_mm_storeu_ps(temp, result);
 	
 	return CVector4(temp[0], temp[1], temp[2], temp[3]);
-#endif
+#endif // !PLATFORM_PS3
 #else
 	return CVector4(
 		m_X / other.m_X,
@@ -342,7 +342,7 @@ CVector4 CVector4::operator/(float32 scalar) const
 	result.v = vec_madd(v1, reciprocal, zero);
 
 	return CVector4(result.f[0], result.f[1], result.f[2], result.f[3]);
-#else
+#else // PLATFORM_PS3
 	float32 invScalar = 1.0f / scalar;
 	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
 	simde__m128 vs = simde_mm_set1_ps(invScalar);
@@ -352,7 +352,7 @@ CVector4 CVector4::operator/(float32 scalar) const
 	simde_mm_storeu_ps(temp, result);
 
 	return CVector4(temp[0], temp[1], temp[2], temp[3]);
-#endif
+#endif // !PLATFORM_PS3
 #else
 	float32 invScalar = 1.0f / scalar;
 
@@ -392,7 +392,7 @@ float32 CVector4::Length() const
 	float32 sum = result.f[0] + result.f[1] + result.f[2] + result.f[3];
 
 	return CMaths::Sqrt(sum);
-#else
+#else // PLATFORM_PS3
 	simde__m128 v = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
 
 	simde__m128 result = simde_mm_mul_ps(v, v);
@@ -402,7 +402,7 @@ float32 CVector4::Length() const
 	float32 sum = temp[0] + temp[1] + temp[2] + temp[3];
 
 	return CMaths::Sqrt(sum);
-#endif
+#endif // !PLATFORM_PS3
 #else
 	float32 xx = m_X * m_X;
 	float32 yy = m_Y * m_Y;
