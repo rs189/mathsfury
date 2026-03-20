@@ -10,6 +10,7 @@ mathsfury is a C++ mathematics library for 3D graphics targeting PlayStation 3 a
 ##### Core dependencies:
 
 - [`public/tier0/platform.h`](https://gist.github.com/rs189/0a5cd6dca531814218f2e31dab0556ca) (internal platform definitions)
+- [`public/tier0/dbg.h`](https://gist.github.com/rs189/77924631ac85ab5092a7aa7dccb11b48) (debug definitions)
 
 ##### PS3 Build dependencies:
 
