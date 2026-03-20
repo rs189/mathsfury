@@ -1,5 +1,5 @@
 # mathsfury
-<img src="mathsfury.png" width="200"/>
+<img src="mathsfury.png" height="180"/>
 
 ### A C++ mathematics library for 3D graphics.
 
