@@ -20,18 +20,22 @@
 #endif
 
 CMatrix4::CMatrix4() :
-	m_Data{ 1.0f, 0.0f, 0.0f, 0.0f,
+	m_Data { 
+		1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, 1.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f }
+		0.0f, 0.0f, 0.0f, 1.0f 
+	}
 {
 }
 
 CMatrix4::CMatrix4(float32 diagonal) :
-	m_Data{ diagonal, 0.0f, 0.0f, 0.0f,
+	m_Data {
+		diagonal, 0.0f, 0.0f, 0.0f,
 		0.0f, diagonal, 0.0f, 0.0f,
 		0.0f, 0.0f, diagonal, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f }
+		0.0f, 0.0f, 0.0f, 1.0f
+	}
 {
 }
 
@@ -52,15 +56,15 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 
 	vector float col3 = vec_lvlx(0, &m_Data[12]);
 	col3 = vec_or(col3, vec_lvrx(16, &m_Data[12]));
-	
-	CMatrix4 result;
 
 	union
 	{
 		vector float v;
 		float32 f[4];
 	}
-	uRes;
+	u;
+
+	CMatrix4 result;
 
 	for (int32 c = 0; c < 4; c++)
 	{
@@ -71,17 +75,16 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 		res = vec_madd(col1, vec_splats(other.m_Data[c * 4 + 1]), res);
 		res = vec_madd(col2, vec_splats(other.m_Data[c * 4 + 2]), res);
 		res = vec_madd(col3, vec_splats(other.m_Data[c * 4 + 3]), res);
-		// Store
-		uRes.v = res;
-		result.m_Data[c * 4 + 0] = uRes.f[0];
-		result.m_Data[c * 4 + 1] = uRes.f[1];
-		result.m_Data[c * 4 + 2] = uRes.f[2];
-		result.m_Data[c * 4 + 3] = uRes.f[3];
+		
+		u.v = res;
+		result.m_Data[c * 4 + 0] = u.f[0];
+		result.m_Data[c * 4 + 1] = u.f[1];
+		result.m_Data[c * 4 + 2] = u.f[2];
+		result.m_Data[c * 4 + 3] = u.f[3];
 	}
 
 	return result;
 #else // PLATFORM_PS3
-	// Load
 	simde__m128 col0 = simde_mm_loadu_ps(&m_Data[0]);
 	simde__m128 col1 = simde_mm_loadu_ps(&m_Data[4]);
 	simde__m128 col2 = simde_mm_loadu_ps(&m_Data[8]);
@@ -109,8 +112,7 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 			simde_mm_mul_ps(
 				col3,
 				simde_mm_set1_ps(other.m_Data[c * 4 + 3])));
-		
-		// Store
+
 		simde_mm_storeu_ps(temp, res);
 		result.m_Data[c * 4 + 0] = temp[0];
 		result.m_Data[c * 4 + 1] = temp[1];
@@ -122,6 +124,7 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 #endif // !PLATFORM_PS3
 #else
 	CMatrix4 result;
+
 	for (int32 i = 0; i < 4; i++)
 	{
 		for (int32 j = 0; j < 4; j++)
@@ -150,6 +153,7 @@ CMatrix4 CMatrix4::operator+(const CMatrix4& other) const
 #ifdef SIMD_ENABLED
 #ifdef PLATFORM_PS3
 	CMatrix4 result;
+
 	for (int32 i = 0; i < 4; i++)
 	{
 		vector float v1 = { m_Data[i * 4 + 0], m_Data[i * 4 + 1], m_Data[i * 4 + 2], m_Data[i * 4 + 3] };
@@ -162,6 +166,7 @@ CMatrix4 CMatrix4::operator+(const CMatrix4& other) const
 		}
 		u;
 		u.v = vec_add(v1, v2);
+
 		result.m_Data[i * 4 + 0] = u.f[0];
 		result.m_Data[i * 4 + 1] = u.f[1];
 		result.m_Data[i * 4 + 2] = u.f[2];
@@ -171,9 +176,9 @@ CMatrix4 CMatrix4::operator+(const CMatrix4& other) const
 	return result;
 #else // PLATFORM_PS3
 	CMatrix4 result;
+
 	for (int32 i = 0; i < 4; i++)
 	{
-		// Load
 		simde__m128 v1 = simde_mm_loadu_ps(&m_Data[i * 4]);
 		simde__m128 v2 = simde_mm_loadu_ps(&other.m_Data[i * 4]);
 		simde_mm_storeu_ps(&result.m_Data[i * 4], simde_mm_add_ps(v1, v2));
@@ -183,6 +188,7 @@ CMatrix4 CMatrix4::operator+(const CMatrix4& other) const
 #endif // !PLATFORM_PS3
 #else
 	CMatrix4 result;
+
 	for (int32 i = 0; i < 16; i++)
 	{
 		result.m_Data[i] = m_Data[i] + other.m_Data[i];
@@ -197,6 +203,7 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 #ifdef SIMD_ENABLED
 #ifdef PLATFORM_PS3
 	CMatrix4 result;
+
 	for (int32 i = 0; i < 4; i++)
 	{
 		vector float v1 = { m_Data[i * 4 + 0], m_Data[i * 4 + 1], m_Data[i * 4 + 2], m_Data[i * 4 + 3] };
@@ -209,6 +216,7 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 		}
 		u;
 		u.v = vec_sub(v1, v2);
+
 		result.m_Data[i * 4 + 0] = u.f[0];
 		result.m_Data[i * 4 + 1] = u.f[1];
 		result.m_Data[i * 4 + 2] = u.f[2];
@@ -218,9 +226,9 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 	return result;
 #else // PLATFORM_PS3
 	CMatrix4 result;
+
 	for (int32 i = 0; i < 4; i++)
 	{
-		// Load
 		simde__m128 v1 = simde_mm_loadu_ps(&m_Data[i * 4]);
 		simde__m128 v2 = simde_mm_loadu_ps(&other.m_Data[i * 4]);
 		simde_mm_storeu_ps(&result.m_Data[i * 4], simde_mm_sub_ps(v1, v2));
@@ -230,6 +238,7 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 #endif // !PLATFORM_PS3
 #else
 	CMatrix4 result;
+
 	for (int32 i = 0; i < 16; i++)
 	{
 		result.m_Data[i] = m_Data[i] - other.m_Data[i];
@@ -294,22 +303,21 @@ CVector4 CMatrix4::operator*(const CVector4& v) const
 	vector float vz = vec_splats(v.m_Z);
 	vector float vw = vec_splats(v.m_W);
 	
-	vector float result = vec_madd(vx, col0, zero);
-	result = vec_madd(vy, col1, result);
-	result = vec_madd(vz, col2, result);
-	result = vec_madd(vw, col3, result);
+	vector float res = vec_madd(vx, col0, zero);
+	res = vec_madd(vy, col1, res);
+	res = vec_madd(vz, col2, res);
+	res = vec_madd(vw, col3, res);
 
 	union
 	{
 		vector float v;
 		float32 f[4];
 	}
-	uRes;
-	uRes.v = result;
+	u;
+	u.v = res;
 
-	return CVector4(uRes.f[0], uRes.f[1], uRes.f[2], uRes.f[3]);
+	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #else // PLATFORM_PS3
-	// Load
 	simde__m128 col0 = simde_mm_loadu_ps(&m_Data[0]);
 	simde__m128 col1 = simde_mm_loadu_ps(&m_Data[4]);
 	simde__m128 col2 = simde_mm_loadu_ps(&m_Data[8]);
@@ -320,11 +328,11 @@ CVector4 CMatrix4::operator*(const CVector4& v) const
 	simde__m128 vz = simde_mm_set1_ps(v.m_Z);
 	simde__m128 vw = simde_mm_set1_ps(v.m_W);
 	
-	simde__m128 result = simde_mm_add_ps(
+	simde__m128 res = simde_mm_add_ps(
 		simde_mm_add_ps(simde_mm_mul_ps(vx, col0), simde_mm_mul_ps(vy, col1)),
 		simde_mm_add_ps(simde_mm_mul_ps(vz, col2), simde_mm_mul_ps(vw, col3)));
 	float32 temp[4];
-	simde_mm_storeu_ps(temp, result);
+	simde_mm_storeu_ps(temp, res);
 
 	return CVector4(temp[0], temp[1], temp[2], temp[3]);
 #endif // !PLATFORM_PS3
@@ -345,6 +353,7 @@ CMatrix4 CMatrix4::ToTransformMatrix(
 		CMaths::Abs(m_Data[12]) < 0.001f && CMaths::Abs(m_Data[13]) < 0.001f && CMaths::Abs(m_Data[14]) < 0.001f);
 
 	CMatrix4 result = *this;
+
 	result.m_Data[0] *= scale.m_X;
 	result.m_Data[1] *= scale.m_X;
 	result.m_Data[2] *= scale.m_X;

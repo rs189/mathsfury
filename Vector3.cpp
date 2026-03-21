@@ -131,17 +131,17 @@ CVector3 CVector3::operator+(const CVector3& other) const
 		vector float v;
 		float32 f[4];
 	}
-	result;
-	result.v = vec_add(v1, v2);
+	u;
+	u.v = vec_add(v1, v2);
 
-	return CVector3(result.f[0], result.f[1], result.f[2]);
+	return CVector3(u.f[0], u.f[1], u.f[2]);
 #else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(0.0f, m_Z, m_Y, m_X);
 	simde__m128 v2 = simde_mm_set_ps(0.0f, other.m_Z, other.m_Y, other.m_X);
 	
-	simde__m128 result = simde_mm_add_ps(v1, v2);
+	simde__m128 res = simde_mm_add_ps(v1, v2);
 	float32 temp[4];
-	simde_mm_storeu_ps(temp, result);
+	simde_mm_storeu_ps(temp, res);
 
 	return CVector3(temp[0], temp[1], temp[2]);
 #endif // !PLATFORM_PS3
@@ -162,17 +162,17 @@ CVector3 CVector3::operator-(const CVector3& other) const
 		vector float v;
 		float32 f[4];
 	}
-	result;
-	result.v = vec_sub(v1, v2);
+	u;
+	u.v = vec_sub(v1, v2);
 
-	return CVector3(result.f[0], result.f[1], result.f[2]);
+	return CVector3(u.f[0], u.f[1], u.f[2]);
 #else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(0.0f, m_Z, m_Y, m_X);
 	simde__m128 v2 = simde_mm_set_ps(0.0f, other.m_Z, other.m_Y, other.m_X);
 	
-	simde__m128 result = simde_mm_sub_ps(v1, v2);
+	simde__m128 res = simde_mm_sub_ps(v1, v2);
 	float32 temp[4];
-	simde_mm_storeu_ps(temp, result);
+	simde_mm_storeu_ps(temp, res);
 
 	return CVector3(temp[0], temp[1], temp[2]);
 #endif // !PLATFORM_PS3
@@ -194,17 +194,17 @@ CVector3 CVector3::operator*(const CVector3& other) const
 		vector float v;
 		float32 f[4];
 	}
-	result;
-	result.v = vec_madd(v1, v2, zero);
+	u;
+	u.v = vec_madd(v1, v2, zero);
 
-	return CVector3(result.f[0], result.f[1], result.f[2]);
+	return CVector3(u.f[0], u.f[1], u.f[2]);
 #else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(0.0f, m_Z, m_Y, m_X);
 	simde__m128 v2 = simde_mm_set_ps(0.0f, other.m_Z, other.m_Y, other.m_X);
 	
-	simde__m128 result = simde_mm_mul_ps(v1, v2);
+	simde__m128 res = simde_mm_mul_ps(v1, v2);
 	float32 temp[4];
-	simde_mm_storeu_ps(temp, result);
+	simde_mm_storeu_ps(temp, res);
 
 	return CVector3(temp[0], temp[1], temp[2]);
 #endif // !PLATFORM_PS3
@@ -226,17 +226,17 @@ CVector3 CVector3::operator*(float32 scalar) const
 		vector float v;
 		float32 f[4];
 	}
-	result;
-	result.v = vec_madd(v1, vs, zero);
+	u;
+	u.v = vec_madd(v1, vs, zero);
 	
-	return CVector3(result.f[0], result.f[1], result.f[2]);
+	return CVector3(u.f[0], u.f[1], u.f[2]);
 #else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(0.0f, m_Z, m_Y, m_X);
 	simde__m128 vs = simde_mm_set1_ps(scalar);
 
-	simde__m128 result = simde_mm_mul_ps(v1, vs);
+	simde__m128 res = simde_mm_mul_ps(v1, vs);
 	float32 temp[4];
-	simde_mm_storeu_ps(temp, result);
+	simde_mm_storeu_ps(temp, res);
 
 	return CVector3(temp[0], temp[1], temp[2]);
 #endif // !PLATFORM_PS3
@@ -259,17 +259,17 @@ CVector3 CVector3::operator/(const CVector3& other) const
 		vector float v;
 		float32 f[4];
 	}
-	result;
-	result.v = vec_madd(v1, reciprocal, zero);
+	u;
+	u.v = vec_madd(v1, reciprocal, zero);
 
-	return CVector3(result.f[0], result.f[1], result.f[2]);
+	return CVector3(u.f[0], u.f[1], u.f[2]);
 #else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(0.0f, m_Z, m_Y, m_X);
 	simde__m128 v2 = simde_mm_set_ps(0.0f, other.m_Z, other.m_Y, other.m_X);
 	
-	simde__m128 result = simde_mm_div_ps(v1, v2);
+	simde__m128 res = simde_mm_div_ps(v1, v2);
 	float32 temp[4];
-	simde_mm_storeu_ps(temp, result);
+	simde_mm_storeu_ps(temp, res);
 
 	return CVector3(temp[0], temp[1], temp[2]);
 #endif // !PLATFORM_PS3
@@ -292,18 +292,18 @@ CVector3 CVector3::operator/(float32 scalar) const
 		vector float v;
 		float32 f[4];
 	}
-	result;
-	result.v = vec_madd(v1, reciprocal, zero);
+	u;
+	u.v = vec_madd(v1, reciprocal, zero);
 
-	return CVector3(result.f[0], result.f[1], result.f[2]);
+	return CVector3(u.f[0], u.f[1], u.f[2]);
 #else // PLATFORM_PS3
 	float32 invScalar = 1.0f / scalar;
 	simde__m128 v1 = simde_mm_set_ps(0.0f, m_Z, m_Y, m_X);
 	simde__m128 vs = simde_mm_set1_ps(invScalar);
 
-	simde__m128 result = simde_mm_mul_ps(v1, vs);
+	simde__m128 res = simde_mm_mul_ps(v1, vs);
 	float32 temp[4];
-	simde_mm_storeu_ps(temp, result);
+	simde_mm_storeu_ps(temp, res);
 
 	return CVector3(temp[0], temp[1], temp[2]);
 #endif // !PLATFORM_PS3
@@ -341,17 +341,17 @@ float32 CVector3::Length() const
 		vector float v;
 		float32 f[4];
 	}
-	result;
-	result.v = vec_madd(v, v, zero);
-	float32 sum = result.f[0] + result.f[1] + result.f[2];
+	u;
+	u.v = vec_madd(v, v, zero);
+	float32 sum = u.f[0] + u.f[1] + u.f[2];
 
 	return CMaths::Sqrt(sum);
 #else // PLATFORM_PS3
 	simde__m128 v = simde_mm_set_ps(0.0f, m_Z, m_Y, m_X);
 
-	simde__m128 result = simde_mm_mul_ps(v, v);
+	simde__m128 res = simde_mm_mul_ps(v, v);
 	float32 temp[4];
-	simde_mm_storeu_ps(temp, result);
+	simde_mm_storeu_ps(temp, res);
 	float32 sum = temp[0] + temp[1] + temp[2];
 
 	return CMaths::Sqrt(sum);
@@ -384,18 +384,18 @@ float32 CVector3::Distance2(const CVector3& other) const
 		vector float v;
 		float32 f[4];
 	}
-	sq;
-	sq.v = vec_madd(diff, diff, zero);
+	u;
+	u.v = vec_madd(diff, diff, zero);
 
-	return sq.f[0] + sq.f[1] + sq.f[2];
+	return u.f[0] + u.f[1] + u.f[2];
 #else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(0.0f, m_Z, m_Y, m_X);
 	simde__m128 v2 = simde_mm_set_ps(0.0f, other.m_Z, other.m_Y, other.m_X);
 	simde__m128 diff = simde_mm_sub_ps(v1, v2);
-	simde__m128 sq = simde_mm_mul_ps(diff, diff);
+	simde__m128 res = simde_mm_mul_ps(diff, diff);
 
 	float32 temp[4];
-	simde_mm_storeu_ps(temp, sq);
+	simde_mm_storeu_ps(temp, res);
 
 	return temp[0] + temp[1] + temp[2];
 #endif // !PLATFORM_PS3
@@ -421,17 +421,17 @@ float32 CVector3::Dot(const CVector3& other) const
 		vector float v;
 		float32 f[4];
 	}
-	result;
-	result.v = vec_madd(v1, v2, zero);
+	u;
+	u.v = vec_madd(v1, v2, zero);
 
-	return result.f[0] + result.f[1] + result.f[2];
+	return u.f[0] + u.f[1] + u.f[2];
 #else // PLATFORM_PS3
 	simde__m128 v1 = simde_mm_set_ps(0.0f, m_Z, m_Y, m_X);
 	simde__m128 v2 = simde_mm_set_ps(0.0f, other.m_Z, other.m_Y, other.m_X);
 
-	simde__m128 result = simde_mm_mul_ps(v1, v2);
+	simde__m128 res = simde_mm_mul_ps(v1, v2);
 	float32 temp[4];
-	simde_mm_storeu_ps(temp, result);
+	simde_mm_storeu_ps(temp, res);
 
 	return temp[0] + temp[1] + temp[2];
 #endif // !PLATFORM_PS3

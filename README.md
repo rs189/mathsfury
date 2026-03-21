@@ -3,7 +3,7 @@
 
 ### A C++ mathematics library for 3D graphics.
 
-mathsfury is a C++ mathematics library for 3D graphics targeting PlayStation 3 and Linux (x86_64). Mathsfury provides vectors, quaternions, and matrices as well as common mathematical functions. It covers graphics programming use cases, including transformations, camera manipulation, and projection.
+mathsfury is a C++ mathematics library for 3D graphics targeting PlayStation 3 and Linux (x86_64). mathsfury provides vectors, quaternions, and matrices as well as common mathematical functions. It covers graphics programming use cases, including transformations, camera manipulation, and projection.
 
 ## Requirements
 
