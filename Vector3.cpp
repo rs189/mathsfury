@@ -365,12 +365,17 @@ float32 CVector3::Length() const
 #endif
 }
 
-float32 CVector3::Distance(const CVector3& other) const
+float32 CVector3::LengthSq() const
 {
-	return CMaths::Sqrt(Distance2(other));
+	return m_X * m_X + m_Y * m_Y + m_Z * m_Z;
 }
 
-float32 CVector3::Distance2(const CVector3& other) const
+float32 CVector3::Distance(const CVector3& other) const
+{
+	return CMaths::Sqrt(DistanceSq(other));
+}
+
+float32 CVector3::DistanceSq(const CVector3& other) const
 {
 #ifdef SIMD_ENABLED
 #ifdef PLATFORM_PS3

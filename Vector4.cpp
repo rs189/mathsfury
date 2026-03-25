@@ -412,3 +412,81 @@ float32 CVector4::Length() const
 	return CMaths::Sqrt(xx + yy + zz + ww);
 #endif
 }
+
+float32 CVector4::LengthSq() const
+{
+#ifdef SIMD_ENABLED
+#ifdef PLATFORM_PS3
+	vector float zero = { 0.0f, 0.0f, 0.0f, 0.0f };
+	vector float v = { m_X, m_Y, m_Z, m_W };
+
+	union
+	{
+		vector float v;
+		float32 f[4];
+	}
+	u;
+	u.v = vec_madd(v, v, zero);
+
+	return u.f[0] + u.f[1] + u.f[2] + u.f[3];
+#else // PLATFORM_PS3
+	simde__m128 v = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
+
+	simde__m128 res = simde_mm_mul_ps(v, v);
+	float32 temp[4];
+	simde_mm_storeu_ps(temp, res);
+
+	return temp[0] + temp[1] + temp[2] + temp[3];
+#endif // !PLATFORM_PS3
+#else
+	return m_X * m_X + m_Y * m_Y + m_Z * m_Z + m_W * m_W;
+#endif
+}
+
+float32 CVector4::Distance(const CVector4& other) const
+{
+	return CMaths::Sqrt(DistanceSq(other));
+}
+
+float32 CVector4::DistanceSq(const CVector4& other) const
+{
+#ifdef SIMD_ENABLED
+#ifdef PLATFORM_PS3
+	vector float zero = { 0.0f, 0.0f, 0.0f, 0.0f };
+	vector float v1 = { m_X, m_Y, m_Z, m_W };
+	vector float v2 = { other.m_X, other.m_Y, other.m_Z, other.m_W };
+	vector float diff = vec_sub(v1, v2);
+
+	union
+	{
+		vector float v;
+		float32 f[4];
+	}
+	u;
+	u.v = vec_madd(diff, diff, zero);
+
+	return u.f[0] + u.f[1] + u.f[2] + u.f[3];
+#else // PLATFORM_PS3
+	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
+	simde__m128 v2 = simde_mm_set_ps(
+		other.m_W,
+		other.m_Z,
+		other.m_Y,
+		other.m_X);
+	simde__m128 diff = simde_mm_sub_ps(v1, v2);
+	simde__m128 res = simde_mm_mul_ps(diff, diff);
+
+	float32 temp[4];
+	simde_mm_storeu_ps(temp, res);
+
+	return temp[0] + temp[1] + temp[2] + temp[3];
+#endif // !PLATFORM_PS3
+#else
+	float32 dx = m_X - other.m_X;
+	float32 dy = m_Y - other.m_Y;
+	float32 dz = m_Z - other.m_Z;
+	float32 dw = m_W - other.m_W;
+
+	return dx * dx + dy * dy + dz * dz + dw * dw;
+#endif
+}
