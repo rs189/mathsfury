@@ -85,10 +85,10 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 
 	return result;
 #else // PLATFORM_PS3
-	simde__m128 col0 = simde_mm_loadu_ps(&m_Data[0]);
-	simde__m128 col1 = simde_mm_loadu_ps(&m_Data[4]);
-	simde__m128 col2 = simde_mm_loadu_ps(&m_Data[8]);
-	simde__m128 col3 = simde_mm_loadu_ps(&m_Data[12]);
+	simde__m128 col0 = simde_mm_load_ps(&m_Data[0]);
+	simde__m128 col1 = simde_mm_load_ps(&m_Data[4]);
+	simde__m128 col2 = simde_mm_load_ps(&m_Data[8]);
+	simde__m128 col3 = simde_mm_load_ps(&m_Data[12]);
 	
 	CMatrix4 result;
 	float32 temp[4];
@@ -179,9 +179,9 @@ CMatrix4 CMatrix4::operator+(const CMatrix4& other) const
 
 	for (int32 i = 0; i < 4; i++)
 	{
-		simde__m128 v1 = simde_mm_loadu_ps(&m_Data[i * 4]);
-		simde__m128 v2 = simde_mm_loadu_ps(&other.m_Data[i * 4]);
-		simde_mm_storeu_ps(&result.m_Data[i * 4], simde_mm_add_ps(v1, v2));
+		simde__m128 v1 = simde_mm_load_ps(&m_Data[i * 4]);
+		simde__m128 v2 = simde_mm_load_ps(&other.m_Data[i * 4]);
+		simde_mm_store_ps(&result.m_Data[i * 4], simde_mm_add_ps(v1, v2));
 	}
 
 	return result;
@@ -229,9 +229,9 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 
 	for (int32 i = 0; i < 4; i++)
 	{
-		simde__m128 v1 = simde_mm_loadu_ps(&m_Data[i * 4]);
-		simde__m128 v2 = simde_mm_loadu_ps(&other.m_Data[i * 4]);
-		simde_mm_storeu_ps(&result.m_Data[i * 4], simde_mm_sub_ps(v1, v2));
+		simde__m128 v1 = simde_mm_load_ps(&m_Data[i * 4]);
+		simde__m128 v2 = simde_mm_load_ps(&other.m_Data[i * 4]);
+		simde_mm_store_ps(&result.m_Data[i * 4], simde_mm_sub_ps(v1, v2));
 	}
 	
 	return result;
@@ -318,10 +318,10 @@ CVector4 CMatrix4::operator*(const CVector4& v) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #else // PLATFORM_PS3
-	simde__m128 col0 = simde_mm_loadu_ps(&m_Data[0]);
-	simde__m128 col1 = simde_mm_loadu_ps(&m_Data[4]);
-	simde__m128 col2 = simde_mm_loadu_ps(&m_Data[8]);
-	simde__m128 col3 = simde_mm_loadu_ps(&m_Data[12]);
+	simde__m128 col0 = simde_mm_load_ps(&m_Data[0]);
+	simde__m128 col1 = simde_mm_load_ps(&m_Data[4]);
+	simde__m128 col2 = simde_mm_load_ps(&m_Data[8]);
+	simde__m128 col3 = simde_mm_load_ps(&m_Data[12]);
 	
 	simde__m128 vx = simde_mm_set1_ps(v.m_X);
 	simde__m128 vy = simde_mm_set1_ps(v.m_Y);
