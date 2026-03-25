@@ -16,7 +16,7 @@
 class CVector4
 {
 public:
-	float32 m_X;
+	alignas(16) float32 m_X;
 	float32 m_Y;
 	float32 m_Z;
 	float32 m_W;

@@ -134,18 +134,14 @@ CVector4 CVector4::operator+(const CVector4& other) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #else // PLATFORM_PS3
-	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
-	simde__m128 v2 = simde_mm_set_ps(
-		other.m_W,
-		other.m_Z,
-		other.m_Y,
-		other.m_X);
+	simde__m128 v1 = simde_mm_load_ps(&m_X);
+	simde__m128 v2 = simde_mm_load_ps(&other.m_X);
 	
 	simde__m128 res = simde_mm_add_ps(v1, v2);
-	float32 temp[4];
-	simde_mm_storeu_ps(temp, res);
+	CVector4 result;
+	simde_mm_store_ps(&result.m_X, res);
 
-	return CVector4(temp[0], temp[1], temp[2], temp[3]);
+	return result;
 #endif // !PLATFORM_PS3
 #else
 	return CVector4(
@@ -173,18 +169,14 @@ CVector4 CVector4::operator-(const CVector4& other) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #else // PLATFORM_PS3
-	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
-	simde__m128 v2 = simde_mm_set_ps(
-		other.m_W,
-		other.m_Z,
-		other.m_Y,
-		other.m_X);
+	simde__m128 v1 = simde_mm_load_ps(&m_X);
+	simde__m128 v2 = simde_mm_load_ps(&other.m_X);
 	
 	simde__m128 res = simde_mm_sub_ps(v1, v2);
-	float32 temp[4];
-	simde_mm_storeu_ps(temp, res);
+	CVector4 result;
+	simde_mm_store_ps(&result.m_X, res);
 
-	return CVector4(temp[0], temp[1], temp[2], temp[3]);
+	return result;
 #endif // !PLATFORM_PS3
 #else
 	return CVector4(
@@ -213,18 +205,14 @@ CVector4 CVector4::operator*(const CVector4& other) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #else // PLATFORM_PS3
-	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
-	simde__m128 v2 = simde_mm_set_ps(
-		other.m_W,
-		other.m_Z,
-		other.m_Y,
-		other.m_X);
+	simde__m128 v1 = simde_mm_load_ps(&m_X);
+	simde__m128 v2 = simde_mm_load_ps(&other.m_X);
 	
 	simde__m128 res = simde_mm_mul_ps(v1, v2);
-	float32 temp[4];
-	simde_mm_storeu_ps(temp, res);
+	CVector4 result;
+	simde_mm_store_ps(&result.m_X, res);
 
-	return CVector4(temp[0], temp[1], temp[2], temp[3]);
+	return result;
 #endif // !PLATFORM_PS3
 #else
 	return CVector4(
@@ -253,14 +241,14 @@ CVector4 CVector4::operator*(float32 scalar) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #else // PLATFORM_PS3
-	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
+	simde__m128 v1 = simde_mm_load_ps(&m_X);
 	simde__m128 vs = simde_mm_set1_ps(scalar);
 
 	simde__m128 res = simde_mm_mul_ps(v1, vs);
-	float32 temp[4];
-	simde_mm_storeu_ps(temp, res);
+	CVector4 result;
+	simde_mm_store_ps(&result.m_X, res);
 
-	return CVector4(temp[0], temp[1], temp[2], temp[3]);
+	return result;
 #endif // !PLATFORM_PS3
 #else
 	return CVector4(m_X * scalar, m_Y * scalar, m_Z * scalar, m_W * scalar);
@@ -286,18 +274,14 @@ CVector4 CVector4::operator/(const CVector4& other) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #else // PLATFORM_PS3
-	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
-	simde__m128 v2 = simde_mm_set_ps(
-		other.m_W,
-		other.m_Z,
-		other.m_Y,
-		other.m_X);
+	simde__m128 v1 = simde_mm_load_ps(&m_X);
+	simde__m128 v2 = simde_mm_load_ps(&other.m_X);
 	
 	simde__m128 res = simde_mm_div_ps(v1, v2);
-	float32 temp[4];
-	simde_mm_storeu_ps(temp, res);
+	CVector4 result;
+	simde_mm_store_ps(&result.m_X, res);
 	
-	return CVector4(temp[0], temp[1], temp[2], temp[3]);
+	return result;
 #endif // !PLATFORM_PS3
 #else
 	return CVector4(
@@ -328,14 +312,14 @@ CVector4 CVector4::operator/(float32 scalar) const
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #else // PLATFORM_PS3
 	float32 invScalar = 1.0f / scalar;
-	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
+	simde__m128 v1 = simde_mm_load_ps(&m_X);
 	simde__m128 vs = simde_mm_set1_ps(invScalar);
 
 	simde__m128 res = simde_mm_mul_ps(v1, vs);
-	float32 temp[4];
-	simde_mm_storeu_ps(temp, res);
+	CVector4 result;
+	simde_mm_store_ps(&result.m_X, res);
 
-	return CVector4(temp[0], temp[1], temp[2], temp[3]);
+	return result;
 #endif // !PLATFORM_PS3
 #else
 	float32 invScalar = 1.0f / scalar;
@@ -377,7 +361,7 @@ float32 CVector4::Length() const
 
 	return CMaths::Sqrt(sum);
 #else // PLATFORM_PS3
-	simde__m128 v = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
+	simde__m128 v = simde_mm_load_ps(&m_X);
 
 	simde__m128 res = simde_mm_mul_ps(v, v);
 	float32 temp[4];
@@ -414,7 +398,7 @@ float32 CVector4::LengthSq() const
 
 	return u.f[0] + u.f[1] + u.f[2] + u.f[3];
 #else // PLATFORM_PS3
-	simde__m128 v = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
+	simde__m128 v = simde_mm_load_ps(&m_X);
 
 	simde__m128 res = simde_mm_mul_ps(v, v);
 	float32 temp[4];
@@ -451,12 +435,8 @@ float32 CVector4::DistanceSq(const CVector4& other) const
 
 	return u.f[0] + u.f[1] + u.f[2] + u.f[3];
 #else // PLATFORM_PS3
-	simde__m128 v1 = simde_mm_set_ps(m_W, m_Z, m_Y, m_X);
-	simde__m128 v2 = simde_mm_set_ps(
-		other.m_W,
-		other.m_Z,
-		other.m_Y,
-		other.m_X);
+	simde__m128 v1 = simde_mm_load_ps(&m_X);
+	simde__m128 v2 = simde_mm_load_ps(&other.m_X);
 	simde__m128 diff = simde_mm_sub_ps(v1, v2);
 	simde__m128 res = simde_mm_mul_ps(diff, diff);
 
