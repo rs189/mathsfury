@@ -65,12 +65,16 @@ CMatrix4 CQuaternion::ToMatrix() const
 	xx = u.f[0];
 	yy = u.f[1];
 	zz = u.f[2];
-#endif // PLATFORM_PS3
-#else
+#else // PLATFORM_PS3
 	xx = m_X * m_X;
 	yy = m_Y * m_Y;
 	zz = m_Z * m_Z;
-#endif // SIMD_ENABLED
+#endif // !PLATFORM_PS3
+#else // SIMD_ENABLED
+	xx = m_X * m_X;
+	yy = m_Y * m_Y;
+	zz = m_Z * m_Z;
+#endif // !SIMD_ENABLED
 
 	float32 xy = m_X * m_Y;
 	float32 xz = m_X * m_Z;
@@ -80,7 +84,6 @@ CMatrix4 CQuaternion::ToMatrix() const
 	float32 wz = m_W * m_Z;
 
 	CMatrix4 result;
-
 	result.m_Data[0] = 1.0f - 2.0f * (yy + zz);
 	result.m_Data[1] = 2.0f * (xy + wz);
 	result.m_Data[2] = 2.0f * (xz - wy);
@@ -119,7 +122,6 @@ CMatrix4 CQuaternion::ToTransformMatrix(
 	float32 wz = m_W * m_Z;
 
 	CMatrix4 result;
-
 	result.m_Data[0] = (1.0f - 2.0f * (yy + zz)) * scale.m_X;
 	result.m_Data[1] = (2.0f * (xy + wz)) * scale.m_X;
 	result.m_Data[2] = (2.0f * (xz - wy)) * scale.m_X;
@@ -172,8 +174,7 @@ CQuaternion& CQuaternion::Normalise()
 	}
 
 	return *this;
-#endif // PLATFORM_PS3
-#endif
+#else // PLATFORM_PS3
 	float32 len = Length();
 	if (len > 1e-8f)
 	{
@@ -185,6 +186,20 @@ CQuaternion& CQuaternion::Normalise()
 	}
 
 	return *this;
+#endif // !PLATFORM_PS3
+#else // SIMD_ENABLED
+	float32 len = Length();
+	if (len > 1e-8f)
+	{
+		float32 invLen = 1.0f / len;
+		m_X *= invLen;
+		m_Y *= invLen;
+		m_Z *= invLen;
+		m_W *= invLen;
+	}
+
+	return *this;
+#endif // !SIMD_ENABLED
 }
 
 float32 CQuaternion::Length() const
@@ -202,7 +217,6 @@ CQuaternion CQuaternion::FromEuler(float32 pitch, float32 yaw, float32 roll)
 	float32 sr = CMaths::Sin(roll * 0.5f);
 
 	CQuaternion result;
-
 	result.m_W = cr * cp * cy + sr * sp * sy;
 	result.m_X = sr * cp * cy - cr * sp * sy;
 	result.m_Y = cr * sp * cy + sr * cp * sy;

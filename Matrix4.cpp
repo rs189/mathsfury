@@ -122,9 +122,8 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 
 	return result;
 #endif // !PLATFORM_PS3
-#else
+#else // SIMD_ENABLED
 	CMatrix4 result;
-
 	result.m_Data[0] =
 		m_Data[0] * other.m_Data[0] + m_Data[4] * other.m_Data[1] +
 		m_Data[8] * other.m_Data[2] + m_Data[12] * other.m_Data[3];
@@ -178,7 +177,7 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 		m_Data[11] * other.m_Data[14] + m_Data[15] * other.m_Data[15];
 
 	return result;
-#endif
+#endif // !SIMD_ENABLED
 }
 
 CMatrix4& CMatrix4::operator*=(const CMatrix4& other)
@@ -226,9 +225,8 @@ CMatrix4 CMatrix4::operator+(const CMatrix4& other) const
 
 	return result;
 #endif // !PLATFORM_PS3
-#else
+#else // SIMD_ENABLED
 	CMatrix4 result;
-
 	result.m_Data[0] = m_Data[0] + other.m_Data[0];
 	result.m_Data[1] = m_Data[1] + other.m_Data[1];
 	result.m_Data[2] = m_Data[2] + other.m_Data[2];
@@ -250,7 +248,7 @@ CMatrix4 CMatrix4::operator+(const CMatrix4& other) const
 	result.m_Data[15] = m_Data[15] + other.m_Data[15];
 
 	return result;
-#endif
+#endif // !SIMD_ENABLED
 }
 
 CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
@@ -291,9 +289,8 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 	
 	return result;
 #endif // !PLATFORM_PS3
-#else
+#else // SIMD_ENABLED
 	CMatrix4 result;
-
 	result.m_Data[0] = m_Data[0] - other.m_Data[0];
 	result.m_Data[1] = m_Data[1] - other.m_Data[1];
 	result.m_Data[2] = m_Data[2] - other.m_Data[2];
@@ -315,7 +312,7 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 	result.m_Data[15] = m_Data[15] - other.m_Data[15];
 
 	return result;
-#endif
+#endif // !SIMD_ENABLED
 }
 
 CMatrix4& CMatrix4::operator+=(const CMatrix4& other)
@@ -442,13 +439,13 @@ CVector4 CMatrix4::operator*(const CVector4& v) const
 
 	return CVector4(temp[0], temp[1], temp[2], temp[3]);
 #endif // !PLATFORM_PS3
-#else
+#else // SIMD_ENABLED
 	return CVector4(
 		m_Data[0] * v.m_X + m_Data[4] * v.m_Y + m_Data[8] * v.m_Z + m_Data[12] * v.m_W,
 		m_Data[1] * v.m_X + m_Data[5] * v.m_Y + m_Data[9] * v.m_Z + m_Data[13] * v.m_W,
 		m_Data[2] * v.m_X + m_Data[6] * v.m_Y + m_Data[10] * v.m_Z + m_Data[14] * v.m_W,
 		m_Data[3] * v.m_X + m_Data[7] * v.m_Y + m_Data[11] * v.m_Z + m_Data[15] * v.m_W);
-#endif
+#endif // !SIMD_ENABLED
 }
 
 CMatrix4 CMatrix4::ToTransformMatrix(
@@ -459,7 +456,6 @@ CMatrix4 CMatrix4::ToTransformMatrix(
 		CMaths::Abs(m_Data[12]) < 0.001f && CMaths::Abs(m_Data[13]) < 0.001f && CMaths::Abs(m_Data[14]) < 0.001f);
 
 	CMatrix4 result = *this;
-
 	result.m_Data[0] *= scale.m_X;
 	result.m_Data[1] *= scale.m_X;
 	result.m_Data[2] *= scale.m_X;

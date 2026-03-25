@@ -120,7 +120,7 @@ CVector3 CVector3::operator+(const CVector3& other) const
 
 	return CVector3(u.f[0], u.f[1], u.f[2]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CVector3(m_X + other.m_X, m_Y + other.m_Y, m_Z + other.m_Z);
 }
 
@@ -141,7 +141,7 @@ CVector3 CVector3::operator-(const CVector3& other) const
 
 	return CVector3(u.f[0], u.f[1], u.f[2]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CVector3(m_X - other.m_X, m_Y - other.m_Y, m_Z - other.m_Z);
 }
 
@@ -163,7 +163,7 @@ CVector3 CVector3::operator*(const CVector3& other) const
 
 	return CVector3(u.f[0], u.f[1], u.f[2]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CVector3(m_X * other.m_X, m_Y * other.m_Y, m_Z * other.m_Z);
 }
 
@@ -185,7 +185,7 @@ CVector3 CVector3::operator*(float32 scalar) const
 	
 	return CVector3(u.f[0], u.f[1], u.f[2]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CVector3(m_X * scalar, m_Y * scalar, m_Z * scalar);
 }
 
@@ -208,7 +208,7 @@ CVector3 CVector3::operator/(const CVector3& other) const
 
 	return CVector3(u.f[0], u.f[1], u.f[2]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CVector3(m_X / other.m_X, m_Y / other.m_Y, m_Z / other.m_Z);
 }
 
@@ -231,7 +231,7 @@ CVector3 CVector3::operator/(float32 scalar) const
 
 	return CVector3(u.f[0], u.f[1], u.f[2]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	float32 invScalar = 1.0f / scalar;
 
 	return CVector3(m_X * invScalar, m_Y * invScalar, m_Z * invScalar);
@@ -270,7 +270,7 @@ float32 CVector3::Length() const
 
 	return CMaths::Sqrt(sum);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CMaths::Sqrt(m_X * m_X + m_Y * m_Y + m_Z * m_Z);
 }
 
@@ -303,7 +303,7 @@ float32 CVector3::DistanceSq(const CVector3& other) const
 
 	return u.f[0] + u.f[1] + u.f[2];
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	float32 dx = m_X - other.m_X;
 	float32 dy = m_Y - other.m_Y;
 	float32 dz = m_Z - other.m_Z;
@@ -329,6 +329,6 @@ float32 CVector3::Dot(const CVector3& other) const
 
 	return u.f[0] + u.f[1] + u.f[2];
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return m_X * other.m_X + m_Y * other.m_Y + m_Z * other.m_Z;
 }

@@ -132,7 +132,7 @@ CVector4 CVector4::operator+(const CVector4& other) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CVector4(
 		m_X + other.m_X,
 		m_Y + other.m_Y,
@@ -157,7 +157,7 @@ CVector4 CVector4::operator-(const CVector4& other) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CVector4(
 		m_X - other.m_X,
 		m_Y - other.m_Y,
@@ -183,7 +183,7 @@ CVector4 CVector4::operator*(const CVector4& other) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CVector4(
 		m_X * other.m_X,
 		m_Y * other.m_Y,
@@ -209,7 +209,7 @@ CVector4 CVector4::operator*(float32 scalar) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CVector4(m_X * scalar, m_Y * scalar, m_Z * scalar, m_W * scalar);
 }
 
@@ -232,7 +232,7 @@ CVector4 CVector4::operator/(const CVector4& other) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CVector4(
 		m_X / other.m_X,
 		m_Y / other.m_Y,
@@ -259,7 +259,7 @@ CVector4 CVector4::operator/(float32 scalar) const
 
 	return CVector4(u.f[0], u.f[1], u.f[2], u.f[3]);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	float32 invScalar = 1.0f / scalar;
 
 	return CVector4(
@@ -298,7 +298,7 @@ float32 CVector4::Length() const
 
 	return CMaths::Sqrt(sum);
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return CMaths::Sqrt(m_X * m_X + m_Y * m_Y + m_Z * m_Z + m_W * m_W);
 }
 
@@ -319,7 +319,7 @@ float32 CVector4::LengthSq() const
 
 	return u.f[0] + u.f[1] + u.f[2] + u.f[3];
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return m_X * m_X + m_Y * m_Y + m_Z * m_Z + m_W * m_W;
 }
 
@@ -347,7 +347,7 @@ float32 CVector4::DistanceSq(const CVector4& other) const
 
 	return u.f[0] + u.f[1] + u.f[2] + u.f[3];
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	float32 dx = m_X - other.m_X;
 	float32 dy = m_Y - other.m_Y;
 	float32 dz = m_Z - other.m_Z;

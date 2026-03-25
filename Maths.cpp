@@ -48,8 +48,7 @@ CVector3 CMaths::Normalise(const CVector3& v)
 	}
 
 	return CVector3(0.0f, 0.0f, 0.0f);
-#endif // PLATFORM_PS3
-#endif
+#else // PLATFORM_PS3
 	float32 lenSq = v.m_X * v.m_X + v.m_Y * v.m_Y + v.m_Z * v.m_Z;
 	if (lenSq > 1e-8f)
 	{
@@ -59,6 +58,18 @@ CVector3 CMaths::Normalise(const CVector3& v)
 	}
 
 	return CVector3(0.0f, 0.0f, 0.0f);
+#endif // !PLATFORM_PS3
+#else // SIMD_ENABLED
+	float32 lenSq = v.m_X * v.m_X + v.m_Y * v.m_Y + v.m_Z * v.m_Z;
+	if (lenSq > 1e-8f)
+	{
+		float32 invLen = 1.0f / Sqrt(lenSq);
+
+		return CVector3(v.m_X * invLen, v.m_Y * invLen, v.m_Z * invLen);
+	}
+
+	return CVector3(0.0f, 0.0f, 0.0f);
+#endif // !SIMD_ENABLED
 }
 
 CVector3 CMaths::Cross(const CVector3& a, const CVector3& b)
@@ -116,12 +127,12 @@ CVector3 CMaths::Cross(const CVector3& a, const CVector3& b)
 
 	return CVector3(temp[0], temp[1], temp[2]);
 #endif // !PLATFORM_PS3
-#else
+#else // SIMD_ENABLED
 	return CVector3(
 		a.m_Y * b.m_Z - a.m_Z * b.m_Y,
 		a.m_Z * b.m_X - a.m_X * b.m_Z,
 		a.m_X * b.m_Y - a.m_Y * b.m_X);
-#endif
+#endif // !SIMD_ENABLED
 }
 
 float32 CMaths::Dot(const CVector3& a, const CVector3& b)
@@ -142,7 +153,7 @@ float32 CMaths::Dot(const CVector3& a, const CVector3& b)
 	
 	return u.f[0] + u.f[1] + u.f[2];
 #endif // PLATFORM_PS3
-#endif
+#endif // SIMD_ENABLED
 	return a.m_X * b.m_X + a.m_Y * b.m_Y + a.m_Z * b.m_Z;
 }
 
@@ -169,7 +180,6 @@ CMatrix4 CMaths::Perspective(
 	float32 wTerm = twoFarNear / nearMinusFar;
 	
 	CMatrix4 result;
-
 	result.m_Data[0] = fOverAspect;
 	result.m_Data[1] = 0.0f;
 	result.m_Data[2] = 0.0f;
@@ -206,7 +216,6 @@ CMatrix4 CMaths::Orthographic(
 	float32 depth = farClip - nearClip;
 
 	CMatrix4 result;
-
 	result.m_Data[0] = 2.0f / width;
 	result.m_Data[1] = 0.0f;
 	result.m_Data[2] = 0.0f;
@@ -244,7 +253,6 @@ CMatrix4 CMaths::LookAt(
 	CVector3 u = Cross(s, f);
 	
 	CMatrix4 result;
-
 	result.m_Data[0] = s.m_X;
 	result.m_Data[1] = u.m_X;
 	result.m_Data[2] = -f.m_X;
@@ -271,7 +279,6 @@ CMatrix4 CMaths::LookAt(
 CMatrix4 CMaths::Translate(const CMatrix4& m, const CVector3& v)
 {
 	CMatrix4 result = m;
-
 	result.m_Data[12] += 
 		m.m_Data[0] * v.m_X + m.m_Data[4] * v.m_Y + m.m_Data[8] * v.m_Z;
 	result.m_Data[13] +=
@@ -313,7 +320,6 @@ CMatrix4 CMaths::Rotate(
 	float32 r22 = c + oneMinusC * azAz;
 
 	CMatrix4 result;
-
 	result.m_Data[0] =
 		m.m_Data[0] * r00 + m.m_Data[4] * r10 + m.m_Data[8] * r20;
 	result.m_Data[1] =
@@ -349,7 +355,6 @@ CMatrix4 CMaths::Rotate(
 CMatrix4 CMaths::Scale(const CMatrix4& m, const CVector3& v)
 {
 	CMatrix4 result;
-
 	result.m_Data[0] = m.m_Data[0] * v.m_X;
 	result.m_Data[1] = m.m_Data[1] * v.m_X;
 	result.m_Data[2] = m.m_Data[2] * v.m_X;
