@@ -29,30 +29,16 @@ CVector3::CVector3(float32 x, float32 y, float32 z) : m_X(x), m_Y(y), m_Z(z)
 
 float32& CVector3::operator[](int32 index)
 {
-	switch (index)
-	{
-		case 0: return m_X;
-		case 1: return m_Y;
-		case 2: return m_Z;
-		default:
-			Assert(false);
+	Assert(index >= 0 && index < 3);
 
-			return m_X;
-	}
+	return (&m_X)[index];
 }
 
 const float32& CVector3::operator[](int32 index) const
 {
-	switch (index)
-	{
-		case 0: return m_X;
-		case 1: return m_Y;
-		case 2: return m_Z;
-		default:
-			Assert(false);
+	Assert(index >= 0 && index < 3);
 
-			return m_X;
-	}
+	return (&m_X)[index];
 }
 
 CVector3& CVector3::operator=(const CVector3& other)

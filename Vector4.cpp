@@ -34,32 +34,16 @@ CVector4::CVector4(
 
 float32& CVector4::operator[](int32 index)
 {
-	switch (index)
-	{
-		case 0: return m_X;
-		case 1: return m_Y;
-		case 2: return m_Z;
-		case 3: return m_W;
-		default:
-			Assert(false);
+	Assert(index >= 0 && index < 4);
 
-			return m_X;
-	}
+	return (&m_X)[index];
 }
 
 const float32& CVector4::operator[](int32 index) const
 {
-	switch (index)
-	{
-		case 0: return m_X;
-		case 1: return m_Y;
-		case 2: return m_Z;
-		case 3: return m_W;
-		default:
-			Assert(false);
+	Assert(index >= 0 && index < 4);
 
-			return m_X;
-	}
+	return (&m_X)[index];
 }
 
 CVector4& CVector4::operator=(const CVector4& other)
