@@ -125,17 +125,57 @@ CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
 #else
 	CMatrix4 result;
 
-	for (int32 i = 0; i < 4; i++)
-	{
-		for (int32 j = 0; j < 4; j++)
-		{
-			result.m_Data[i * 4 + j] = 
-				m_Data[0 * 4 + j] * other.m_Data[i * 4 + 0] +
-				m_Data[1 * 4 + j] * other.m_Data[i * 4 + 1] +
-				m_Data[2 * 4 + j] * other.m_Data[i * 4 + 2] +
-				m_Data[3 * 4 + j] * other.m_Data[i * 4 + 3];
-		}
-	}
+	result.m_Data[0] =
+		m_Data[0] * other.m_Data[0] + m_Data[4] * other.m_Data[1] +
+		m_Data[8] * other.m_Data[2] + m_Data[12] * other.m_Data[3];
+	result.m_Data[1] =
+		m_Data[1] * other.m_Data[0] + m_Data[5] * other.m_Data[1] +
+		m_Data[9] * other.m_Data[2] + m_Data[13] * other.m_Data[3];
+	result.m_Data[2] =
+		m_Data[2] * other.m_Data[0] + m_Data[6] * other.m_Data[1] +
+		m_Data[10] * other.m_Data[2] + m_Data[14] * other.m_Data[3];
+	result.m_Data[3] =
+		m_Data[3] * other.m_Data[0] + m_Data[7] * other.m_Data[1] +
+		m_Data[11] * other.m_Data[2] + m_Data[15] * other.m_Data[3];
+
+	result.m_Data[4] =
+		m_Data[0] * other.m_Data[4] + m_Data[4] * other.m_Data[5] +
+		m_Data[8] * other.m_Data[6] + m_Data[12] * other.m_Data[7];
+	result.m_Data[5] =
+		m_Data[1] * other.m_Data[4] + m_Data[5] * other.m_Data[5] +
+		m_Data[9] * other.m_Data[6] + m_Data[13] * other.m_Data[7];
+	result.m_Data[6] =
+		m_Data[2] * other.m_Data[4] + m_Data[6] * other.m_Data[5] +
+		m_Data[10] * other.m_Data[6] + m_Data[14] * other.m_Data[7];
+	result.m_Data[7] =
+		m_Data[3] * other.m_Data[4] + m_Data[7] * other.m_Data[5] +
+		m_Data[11] * other.m_Data[6] + m_Data[15] * other.m_Data[7];
+
+	result.m_Data[8] =
+		m_Data[0] * other.m_Data[8] + m_Data[4] * other.m_Data[9] +
+		m_Data[8] * other.m_Data[10] + m_Data[12] * other.m_Data[11];
+	result.m_Data[9] =
+		m_Data[1] * other.m_Data[8] + m_Data[5] * other.m_Data[9] +
+		m_Data[9] * other.m_Data[10] + m_Data[13] * other.m_Data[11];
+	result.m_Data[10] =
+		m_Data[2] * other.m_Data[8] + m_Data[6] * other.m_Data[9] +
+		m_Data[10] * other.m_Data[10] + m_Data[14] * other.m_Data[11];
+	result.m_Data[11] =
+		m_Data[3] * other.m_Data[8] + m_Data[7] * other.m_Data[9] +
+		m_Data[11] * other.m_Data[10] + m_Data[15] * other.m_Data[11];
+
+	result.m_Data[12] =
+		m_Data[0] * other.m_Data[12] + m_Data[4] * other.m_Data[13] +
+		m_Data[8] * other.m_Data[14] + m_Data[12] * other.m_Data[15];
+	result.m_Data[13] =
+		m_Data[1] * other.m_Data[12] + m_Data[5] * other.m_Data[13] +
+		m_Data[9] * other.m_Data[14] + m_Data[13] * other.m_Data[15];
+	result.m_Data[14] =
+		m_Data[2] * other.m_Data[12] + m_Data[6] * other.m_Data[13] +
+		m_Data[10] * other.m_Data[14] + m_Data[14] * other.m_Data[15];
+	result.m_Data[15] =
+		m_Data[3] * other.m_Data[12] + m_Data[7] * other.m_Data[13] +
+		m_Data[11] * other.m_Data[14] + m_Data[15] * other.m_Data[15];
 
 	return result;
 #endif
@@ -189,10 +229,25 @@ CMatrix4 CMatrix4::operator+(const CMatrix4& other) const
 #else
 	CMatrix4 result;
 
-	for (int32 i = 0; i < 16; i++)
-	{
-		result.m_Data[i] = m_Data[i] + other.m_Data[i];
-	}
+	result.m_Data[0] = m_Data[0] + other.m_Data[0];
+	result.m_Data[1] = m_Data[1] + other.m_Data[1];
+	result.m_Data[2] = m_Data[2] + other.m_Data[2];
+	result.m_Data[3] = m_Data[3] + other.m_Data[3];
+
+	result.m_Data[4] = m_Data[4] + other.m_Data[4];
+	result.m_Data[5] = m_Data[5] + other.m_Data[5];
+	result.m_Data[6] = m_Data[6] + other.m_Data[6];
+	result.m_Data[7] = m_Data[7] + other.m_Data[7];
+
+	result.m_Data[8] = m_Data[8] + other.m_Data[8];
+	result.m_Data[9] = m_Data[9] + other.m_Data[9];
+	result.m_Data[10] = m_Data[10] + other.m_Data[10];
+	result.m_Data[11] = m_Data[11] + other.m_Data[11];
+
+	result.m_Data[12] = m_Data[12] + other.m_Data[12];
+	result.m_Data[13] = m_Data[13] + other.m_Data[13];
+	result.m_Data[14] = m_Data[14] + other.m_Data[14];
+	result.m_Data[15] = m_Data[15] + other.m_Data[15];
 
 	return result;
 #endif
@@ -239,10 +294,25 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 #else
 	CMatrix4 result;
 
-	for (int32 i = 0; i < 16; i++)
-	{
-		result.m_Data[i] = m_Data[i] - other.m_Data[i];
-	}
+	result.m_Data[0] = m_Data[0] - other.m_Data[0];
+	result.m_Data[1] = m_Data[1] - other.m_Data[1];
+	result.m_Data[2] = m_Data[2] - other.m_Data[2];
+	result.m_Data[3] = m_Data[3] - other.m_Data[3];
+
+	result.m_Data[4] = m_Data[4] - other.m_Data[4];
+	result.m_Data[5] = m_Data[5] - other.m_Data[5];
+	result.m_Data[6] = m_Data[6] - other.m_Data[6];
+	result.m_Data[7] = m_Data[7] - other.m_Data[7];
+
+	result.m_Data[8] = m_Data[8] - other.m_Data[8];
+	result.m_Data[9] = m_Data[9] - other.m_Data[9];
+	result.m_Data[10] = m_Data[10] - other.m_Data[10];
+	result.m_Data[11] = m_Data[11] - other.m_Data[11];
+
+	result.m_Data[12] = m_Data[12] - other.m_Data[12];
+	result.m_Data[13] = m_Data[13] - other.m_Data[13];
+	result.m_Data[14] = m_Data[14] - other.m_Data[14];
+	result.m_Data[15] = m_Data[15] - other.m_Data[15];
 
 	return result;
 #endif
@@ -250,14 +320,50 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 
 CMatrix4& CMatrix4::operator+=(const CMatrix4& other)
 {
-	*this = *this + other;
+	m_Data[0] += other.m_Data[0];
+	m_Data[1] += other.m_Data[1];
+	m_Data[2] += other.m_Data[2];
+	m_Data[3] += other.m_Data[3];
+
+	m_Data[4] += other.m_Data[4];
+	m_Data[5] += other.m_Data[5];
+	m_Data[6] += other.m_Data[6];
+	m_Data[7] += other.m_Data[7];
+
+	m_Data[8] += other.m_Data[8];
+	m_Data[9] += other.m_Data[9];
+	m_Data[10] += other.m_Data[10];
+	m_Data[11] += other.m_Data[11];
+
+	m_Data[12] += other.m_Data[12];
+	m_Data[13] += other.m_Data[13];
+	m_Data[14] += other.m_Data[14];
+	m_Data[15] += other.m_Data[15];
 
 	return *this;
 }
 
 CMatrix4& CMatrix4::operator-=(const CMatrix4& other)
 {
-	*this = *this - other;
+	m_Data[0] -= other.m_Data[0];
+	m_Data[1] -= other.m_Data[1];
+	m_Data[2] -= other.m_Data[2];
+	m_Data[3] -= other.m_Data[3];
+
+	m_Data[4] -= other.m_Data[4];
+	m_Data[5] -= other.m_Data[5];
+	m_Data[6] -= other.m_Data[6];
+	m_Data[7] -= other.m_Data[7];
+
+	m_Data[8] -= other.m_Data[8];
+	m_Data[9] -= other.m_Data[9];
+	m_Data[10] -= other.m_Data[10];
+	m_Data[11] -= other.m_Data[11];
+
+	m_Data[12] -= other.m_Data[12];
+	m_Data[13] -= other.m_Data[13];
+	m_Data[14] -= other.m_Data[14];
+	m_Data[15] -= other.m_Data[15];
 
 	return *this;
 }

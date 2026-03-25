@@ -75,11 +75,9 @@ CVector2& CVector2::operator*=(float32 scalar)
 
 CVector2& CVector2::operator/=(const CVector2& other)
 {
-	float32 invX = 1.0f / other.m_X;
-	float32 invY = 1.0f / other.m_Y;
-	m_X *= invX;
-	m_Y *= invY;
-	
+	m_X /= other.m_X;
+	m_Y /= other.m_Y;
+
 	return *this;
 }
 
