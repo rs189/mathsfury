@@ -95,6 +95,7 @@ mathsfury is a C++ mathematics library for 3D graphics targeting PlayStation 3 a
 - `float32 Distance(const CVector3& other) const`
 - `float32 DistanceSq(const CVector3& other) const`
 - `float32 Dot(const CVector3& other) const`
+- `CVector3 Cross(const CVector3& other) const`
 
 ### CVector4(float32 m_X, float32 m_Y, float32 m_Z, float32 m_W)
 - `CVector4 operator+(const CVector4& other) const`
@@ -162,8 +163,8 @@ CMatrix4 ortho = CMaths::Orthographic(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
 CVector3 a(1.0f, 0.0f, 0.0f);
 CVector3 b(0.0f, 1.0f, 0.0f);
 CVector3 norm = CMaths::Normalise(position);
-CVector3 cross = CMaths::Cross(a, b);
-float32 dot = CMaths::Dot(a, b);
+CVector3 cross = a.Cross(b);
+float32 dot = a.Dot(b);
 
 // Quaternion rotation
 CQuaternion rotation = CQuaternion::FromEuler(0.0f, 45.0f, 0.0f);

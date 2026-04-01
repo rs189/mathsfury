@@ -51,6 +51,7 @@ public:
 	float32 Distance(const CVector3& other) const;
 	float32 DistanceSq(const CVector3& other) const;
 	float32 Dot(const CVector3& other) const;
+	CVector3 Cross(const CVector3& other) const;
 };
 
 #endif // VECTOR3_H

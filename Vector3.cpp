@@ -332,3 +332,11 @@ float32 CVector3::Dot(const CVector3& other) const
 #endif // SIMD_ENABLED
 	return m_X * other.m_X + m_Y * other.m_Y + m_Z * other.m_Z;
 }
+
+CVector3 CVector3::Cross(const CVector3& other) const
+{
+	return CVector3(
+		m_Y * other.m_Z - m_Z * other.m_Y,
+		m_Z * other.m_X - m_X * other.m_Z,
+		m_X * other.m_Y - m_Y * other.m_X);
+}
