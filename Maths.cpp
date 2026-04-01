@@ -48,8 +48,7 @@ CVector3 CMaths::Normalise(const CVector3& v)
 	}
 
 	return CVector3(0.0f, 0.0f, 0.0f);
-#endif // PLATFORM_PS3
-#endif // SIMD_ENABLED
+#else // PLATFORM_PS3
 	float32 lenSq = v.m_X * v.m_X + v.m_Y * v.m_Y + v.m_Z * v.m_Z;
 	if (lenSq > 1e-8f)
 	{
@@ -59,6 +58,18 @@ CVector3 CMaths::Normalise(const CVector3& v)
 	}
 
 	return CVector3(0.0f, 0.0f, 0.0f);
+#endif // !PLATFORM_PS3
+#else // SIMD_ENABLED
+	float32 lenSq = v.m_X * v.m_X + v.m_Y * v.m_Y + v.m_Z * v.m_Z;
+	if (lenSq > 1e-8f)
+	{
+		float32 invLen = 1.0f / Sqrt(lenSq);
+
+		return CVector3(v.m_X * invLen, v.m_Y * invLen, v.m_Z * invLen);
+	}
+
+	return CVector3(0.0f, 0.0f, 0.0f);
+#endif // !SIMD_ENABLED
 }
 
 CVector3 CMaths::Cross(const CVector3& a, const CVector3& b)
