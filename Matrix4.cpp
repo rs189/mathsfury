@@ -193,17 +193,20 @@ CMatrix4 CMatrix4::operator+(const CMatrix4& other) const
 #ifdef PLATFORM_PS3
 	CMatrix4 result;
 
+	union
+	{
+		vector float v;
+		float32 f[4];
+	}
+	u;
+
 	for (int32 i = 0; i < 4; i++)
 	{
-		vector float v1 = { m_Data[i * 4 + 0], m_Data[i * 4 + 1], m_Data[i * 4 + 2], m_Data[i * 4 + 3] };
-		vector float v2 = { other.m_Data[i * 4 + 0], other.m_Data[i * 4 + 1], other.m_Data[i * 4 + 2], other.m_Data[i * 4 + 3] };
+		vector float v1 = vec_lvlx(0, &m_Data[i * 4]);
+		v1 = vec_or(v1, vec_lvrx(16, &m_Data[i * 4]));
+		vector float v2 = vec_lvlx(0, &other.m_Data[i * 4]);
+		v2 = vec_or(v2, vec_lvrx(16, &other.m_Data[i * 4]));
 
-		union
-		{
-			vector float v;
-			float32 f[4];
-		}
-		u;
 		u.v = vec_add(v1, v2);
 
 		result.m_Data[i * 4 + 0] = u.f[0];
@@ -259,13 +262,15 @@ CMatrix4 CMatrix4::operator-(const CMatrix4& other) const
 
 	for (int32 i = 0; i < 4; i++)
 	{
-		vector float v1 = { m_Data[i * 4 + 0], m_Data[i * 4 + 1], m_Data[i * 4 + 2], m_Data[i * 4 + 3] };
-		vector float v2 = { other.m_Data[i * 4 + 0], other.m_Data[i * 4 + 1], other.m_Data[i * 4 + 2], other.m_Data[i * 4 + 3] };
-		
+		vector float v1 = vec_lvlx(0, &m_Data[i * 4]);
+		v1 = vec_or(v1, vec_lvrx(16, &m_Data[i * 4]));
+		vector float v2 = vec_lvlx(0, &other.m_Data[i * 4]);
+		v2 = vec_or(v2, vec_lvrx(16, &other.m_Data[i * 4]));
+
 		union
-		{ 
-			vector float v; 
-			float32 f[4]; 
+		{
+			vector float v;
+			float32 f[4];
 		}
 		u;
 		u.v = vec_sub(v1, v2);
