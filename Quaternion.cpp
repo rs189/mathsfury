@@ -126,15 +126,62 @@ CMatrix4 CQuaternion::ToTransformMatrix(
 	const CVector3& position,
 	const CVector3& scale) const
 {
-	float32 xx = m_X * m_X;
-	float32 yy = m_Y * m_Y;
-	float32 zz = m_Z * m_Z;
-	float32 xy = m_X * m_Y;
-	float32 xz = m_X * m_Z;
-	float32 yz = m_Y * m_Z;
-	float32 wx = m_W * m_X;
-	float32 wy = m_W * m_Y;
-	float32 wz = m_W * m_Z;
+	float32 xx, yy, zz;
+	float32 xy, xz, yz, wx, wy, wz;
+
+#ifdef SIMD_ENABLED
+#ifdef PLATFORM_PS3
+	vector float zero = { 0.0f, 0.0f, 0.0f, 0.0f };
+	vector float q = { m_X, m_Y, m_Z, m_W };
+
+	union
+	{
+		vector float v;
+		float32 f[4];
+	}
+	u;
+	u.v = vec_madd(q, q, zero);
+
+	xx = u.f[0];
+	yy = u.f[1];
+	zz = u.f[2];
+
+	vector float vx = vec_splats(m_X);
+	vector float qyzw = { m_Y, m_Z, m_W, 0.0f };
+	u.v = vec_madd(vx, qyzw, zero);
+	xy = u.f[0];
+	xz = u.f[1];
+	wx = u.f[2];
+
+	vector float vy = vec_splats(m_Y);
+	vector float qzw = { m_Z, m_W, 0.0f, 0.0f };
+	u.v = vec_madd(vy, qzw, zero);
+	yz = u.f[0];
+	wy = u.f[1];
+
+	wz = m_W * m_Z;
+#else // PLATFORM_PS3
+	xx = m_X * m_X;
+	yy = m_Y * m_Y;
+	zz = m_Z * m_Z;
+	xy = m_X * m_Y;
+	xz = m_X * m_Z;
+	yz = m_Y * m_Z;
+	wx = m_W * m_X;
+	wy = m_W * m_Y;
+	wz = m_W * m_Z;
+#endif // !PLATFORM_PS3
+#else // SIMD_ENABLED
+	xx = m_X * m_X;
+	yy = m_Y * m_Y;
+	zz = m_Z * m_Z;
+	xy = m_X * m_Y;
+	xz = m_X * m_Z;
+	yz = m_Y * m_Z;
+	wx = m_W * m_X;
+	wy = m_W * m_Y;
+	wz = m_W * m_Z;
+#endif // !SIMD_ENABLED
 
 	CMatrix4 result;
 	result.m_Data[0] = (1.0f - 2.0f * (yy + zz)) * scale.m_X;
