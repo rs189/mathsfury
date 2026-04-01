@@ -32,17 +32,11 @@ CQuaternion::CQuaternion(
 
 CQuaternion CQuaternion::operator*(const CQuaternion& other) const
 {
-	CQuaternion result;
-	result.m_W =
-		m_W * other.m_W - m_X * other.m_X - m_Y * other.m_Y - m_Z * other.m_Z;
-	result.m_X =
-		m_W * other.m_X + m_X * other.m_W + m_Y * other.m_Z - m_Z * other.m_Y;
-	result.m_Y =
-		m_W * other.m_Y - m_X * other.m_Z + m_Y * other.m_W + m_Z * other.m_X;
-	result.m_Z =
-		m_W * other.m_Z + m_X * other.m_Y - m_Y * other.m_X + m_Z * other.m_W;
-
-	return result;
+	return CQuaternion(
+		m_W * other.m_X + m_X * other.m_W + m_Y * other.m_Z - m_Z * other.m_Y,
+		m_W * other.m_Y - m_X * other.m_Z + m_Y * other.m_W + m_Z * other.m_X,
+		m_W * other.m_Z + m_X * other.m_Y - m_Y * other.m_X + m_Z * other.m_W,
+		m_W * other.m_W - m_X * other.m_X - m_Y * other.m_Y - m_Z * other.m_Z);
 }
 
 CMatrix4 CQuaternion::ToMatrix() const
@@ -216,11 +210,9 @@ CQuaternion CQuaternion::FromEuler(float32 pitch, float32 yaw, float32 roll)
 	float32 cr = CMaths::Cos(roll * 0.5f);
 	float32 sr = CMaths::Sin(roll * 0.5f);
 
-	CQuaternion result;
-	result.m_W = cr * cp * cy + sr * sp * sy;
-	result.m_X = sr * cp * cy - cr * sp * sy;
-	result.m_Y = cr * sp * cy + sr * cp * sy;
-	result.m_Z = cr * cp * sy - sr * sp * cy;
-
-	return result;
+	return CQuaternion(
+		sr * cp * cy - cr * sp * sy,
+		cr * sp * cy + sr * cp * sy,
+		cr * cp * sy - sr * sp * cy,
+		cr * cp * cy + sr * sp * sy);
 }

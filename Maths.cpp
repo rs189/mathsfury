@@ -388,9 +388,7 @@ EquirectUV_t CMaths::DirectionToEquirect(const CVector3& dir)
 	float32 u = (lon + PI) / (2.0f * PI);
 	float32 v = (lat + (PI * 0.5f)) / PI;
 
-	EquirectUV_t result;
-	result.m_U = u;
-	result.m_V = v;
+	EquirectUV_t result = { u, v };
 
 	return result;
 }
