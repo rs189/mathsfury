@@ -32,87 +32,87 @@ public:
 	static const float32 Deg2Rad;
 	static const float32 Rad2Deg;
 
-	static inline float32 Sqrt(float32 f)
+	static INLINE float32 Sqrt(float32 f)
 	{
 		return sqrtf(f);
 	}
 
-	static inline float32 Tan(float32 f)
+	static INLINE float32 Tan(float32 f)
 	{
 		return tanf(f);
 	}
 
-	static inline float32 Cos(float32 f)
+	static INLINE float32 Cos(float32 f)
 	{
 		return cosf(f);
 	}
 
-	static inline float32 Sin(float32 f)
+	static INLINE float32 Sin(float32 f)
 	{
 		return sinf(f);
 	}
 
-	static inline float32 ATan2(float32 y, float32 x)
+	static INLINE float32 ATan2(float32 y, float32 x)
 	{
 		return atan2f(y, x);
 	}
 
-	static inline float32 ASin(float32 f)
+	static INLINE float32 ASin(float32 f)
 	{
 		return asinf(f);
 	}
 
-	static inline float32 Abs(float32 a)
+	static INLINE float32 Abs(float32 a)
 	{
 		return fabsf(a);
 	}
 
-	static inline int32 Abs(int32 a)
+	static INLINE int32 Abs(int32 a)
 	{
 		return (a < 0) ? -a : a;
 	}
 
-	static inline float32 Min(float32 a, float32 b)
+	static INLINE float32 Min(float32 a, float32 b)
 	{
 		return fminf(a, b);
 	}
 
-	static inline int32 Min(int32 a, int32 b)
+	static INLINE int32 Min(int32 a, int32 b)
 	{
 		return (a < b) ? a : b;
 	}
 
-	static inline uint32 Min(uint32 a, uint32 b)
+	static INLINE uint32 Min(uint32 a, uint32 b)
 	{
 		return (a < b) ? a : b;
 	}
 
-	static inline float32 Max(float32 a, float32 b)
+	static INLINE float32 Max(float32 a, float32 b)
 	{
 		return fmaxf(a, b);
 	}
 
-	static inline int32 Max(int32 a, int32 b)
+	static INLINE int32 Max(int32 a, int32 b)
 	{
 		return (a > b) ? a : b;
 	}
 
-	static inline uint32 Max(uint32 a, uint32 b)
+	static INLINE uint32 Max(uint32 a, uint32 b)
 	{
 		return (a > b) ? a : b;
 	}
 
-	static inline float32 Clamp(float32 value, float32 minVal, float32 maxVal)
+	static INLINE float32 Clamp(float32 value, float32 minVal, float32 maxVal)
 	{
 		return Max(minVal, Min(value, maxVal));
 	}
 
-	static inline int32 Clamp(int32 value, int32 minVal, int32 maxVal)
+	static INLINE int32 Clamp(int32 value, int32 minVal, int32 maxVal)
 	{
 		return Max(minVal, Min(value, maxVal));
 	}
 
-	static inline uint32 Clamp(uint32 value, uint32 minVal, uint32 maxVal)
+	static INLINE uint32 Clamp(uint32 value, uint32 minVal, uint32 maxVal)
 	{
 		return Max(minVal, Min(value, maxVal));
 	}
