@@ -14,8 +14,8 @@
 #ifdef PLATFORM_PS3
 #include <altivec.h>
 #undef bool
-#endif
-#endif
+#endif // PLATFORM_PS3
+#endif // SIMD_ENABLED
 
 CVector3::CVector3() : m_X(0.0f), m_Y(0.0f), m_Z(0.0f)
 {

@@ -13,10 +13,10 @@
 #ifdef SIMD_ENABLED
 #ifdef PLATFORM_PS3
 #include <altivec.h>
-#else
+#else // !PLATFORM_PS3
 #include <simde/x86/sse.h>
-#endif
-#endif
+#endif // PLATFORM_PS3
+#endif // SIMD_ENABLED
 
 const float32 CMaths::PI = 3.14159265358979323846f;
 const float32 CMaths::TwoPI = PI * 2.0f;

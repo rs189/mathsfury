@@ -14,29 +14,55 @@
 #ifdef PLATFORM_PS3
 #include <altivec.h>
 #undef bool
-#else
+#else // !PLATFORM_PS3
 #include <simde/x86/sse.h>
-#endif
-#endif
+#endif // PLATFORM_PS3
+#endif // SIMD_ENABLED
 
-CMatrix4::CMatrix4() :
-	m_Data { 
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f 
-	}
+CMatrix4::CMatrix4()
 {
+	m_Data[0] = 1.0f;
+	m_Data[1] = 0.0f;
+	m_Data[2] = 0.0f;
+	m_Data[3] = 0.0f;
+
+	m_Data[4] = 0.0f;
+	m_Data[5] = 1.0f;
+	m_Data[6] = 0.0f;
+	m_Data[7] = 0.0f;
+
+	m_Data[8] = 0.0f;
+	m_Data[9] = 0.0f;
+	m_Data[10] = 1.0f;
+	m_Data[11] = 0.0f;
+
+	m_Data[12] = 0.0f;
+	m_Data[13] = 0.0f;
+	m_Data[14] = 0.0f;
+	m_Data[15] = 1.0f;
 }
 
-CMatrix4::CMatrix4(float32 diagonal) :
-	m_Data {
-		diagonal, 0.0f, 0.0f, 0.0f,
-		0.0f, diagonal, 0.0f, 0.0f,
-		0.0f, 0.0f, diagonal, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	}
+CMatrix4::CMatrix4(float32 diagonal)
 {
+	m_Data[0] = diagonal;
+	m_Data[1] = 0.0f;
+	m_Data[2] = 0.0f;
+	m_Data[3] = 0.0f;
+
+	m_Data[4] = 0.0f;
+	m_Data[5] = diagonal;
+	m_Data[6] = 0.0f;
+	m_Data[7] = 0.0f;
+
+	m_Data[8] = 0.0f;
+	m_Data[9] = 0.0f;
+	m_Data[10] = diagonal;
+	m_Data[11] = 0.0f;
+
+	m_Data[12] = 0.0f;
+	m_Data[13] = 0.0f;
+	m_Data[14] = 0.0f;
+	m_Data[15] = 1.0f;
 }
 
 CMatrix4 CMatrix4::operator*(const CMatrix4& other) const
